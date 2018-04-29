@@ -55,6 +55,7 @@
   padding: 0px;
   margin: 0px;
   border-radius: 4px;
+  overflow: hidden;
 
   color: black;
   background-color: white;
@@ -75,6 +76,7 @@
 .search-header .movie-icon {
   margin-right: 15px;
   fill: white;
+  font-size: 32px;
 }
 
 .search-header span {

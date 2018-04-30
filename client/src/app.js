@@ -44,6 +44,7 @@ class App extends Component {
 }
 
 class SearchBox extends Component {
+  INPUT_DELAY_MS = 300;
   state = {
     query: '',
   };
@@ -54,21 +55,15 @@ class SearchBox extends Component {
     this.typingTimeout = null;
   }
 
-  handleInputChange(inputValue) {
-  }
-
   onInputChange(evt) {
     clearTimeout(this.typingTimeout);
 
     let inputValue = evt.target.value;
-    setTimeout(this.handleInputChange
     console.log(inputValue);
-    this.setState({
-      query: inputValue
-    });
-    
-    // TODO: Dont do this on every change
-    this.onQueryChanged(inputValue);
+    this.typingTimeout = setTimeout(function() {
+        this.onQueryChanged(inputValue);
+        this.setState({query: inputValue});
+    }.bind(this), this.INPUT_DELAY_MS);
   }
 
   render() {

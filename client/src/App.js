@@ -51,10 +51,17 @@ class SearchBox extends Component {
   constructor(props) {
     super(props);
     this.onQueryChanged = props.onQueryChanged;
+    this.typingTimeout = null;
+  }
+
+  handleInputChange(inputValue) {
   }
 
   onInputChange(evt) {
+    clearTimeout(this.typingTimeout);
+
     let inputValue = evt.target.value;
+    setTimeout(this.handleInputChange
     console.log(inputValue);
     this.setState({
       query: inputValue
@@ -129,7 +136,7 @@ class SearchEntry extends Component {
       <div className="search-entry">
         <span className="index">{this.props.idx + 1}</span>
         <img src={this.props.movieData.image} className="movie-image" />
-        <span className="info">{this.props.movieData.title}</span>
+        <span className="info" dangerouslySetInnerHTML={{__html: this.props.movieData._highlightResult.title.value}} />
       </div>
     );
   }

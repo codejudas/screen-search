@@ -1,8 +1,6 @@
 .container {
   margin: 0px 15%;
   height: 100%;
-  border-left: 1px white solid;
-  border-right: 1px white solid;
 }
 
 .search-box {
@@ -13,6 +11,13 @@
   background-color: white;
   box-sizing: border-box;
   border-radius: 4px;
+  box-shadow: inset 0 0 0 #4834d4;
+  transition: box-shadow 1s;
+}
+
+.search-box.focused {
+  box-shadow: inset 0 0 15px #7ed6df;
+  transition: box-shadow 1s;
 }
 
 .search-box > img {
@@ -87,7 +92,7 @@
 }
 
 .search-entry {
-  display: inline-block;
+  display: inline-flex;
   padding: 10px 0px;
   width: 100%;
   box-sizing: border-box;
@@ -130,7 +135,7 @@
 .search-entry .index {
   width: 20px;
   text-align: center;
-  vertical-align: middle;
+  align-self: center;
 }
 
 .search-entry .info {
@@ -140,20 +145,52 @@
 }
 
 .search-entry .info em {
-    color: #686de0;
-    font-style: normal;
-    font-weight: 400;
+  color: #686de0;
+  font-style: normal;
+  font-weight: 400;
+}
 
+.search-entry .title {
+  font-weight: 400;
+  margin-bottom: 5px;
 }
 
 .search-entry .secondary {
-    font-size: 14px;
-    font-weight: 200;
-    opacity: 0.8;
+  font-size: 14px;
+  font-weight: 200;
+  opacity: 0.8;
 }
 
 .search-entry .actors {
-    font-size: 14px;
-    font-weight: 200;
-    opacity: 0.8;
+  font-size: 14px;
+  font-weight: 200;
+  opacity: 0.8;
+}
+
+.search-entry .delete-button {
+    margin: auto;
+    margin-right: 30px;
+    font-size: 25px;
+    color: #eb4d4b;
+    opacity: 0;
+    visibility: hidden;
+    transition: color 1s opacity 1s;
+}
+
+.search-entry:hover .delete-button {
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 1s;
+}
+
+.search-entry .delete-button:hover {
+    color: #ff7979;
+    transition: color 1s;
+}
+
+.search-entry .delete-spinner {
+    align-self: flex-end;
+    margin: auto;
+    margin-right: 25px;
+    width: 40px;
 }

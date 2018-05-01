@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
+import AlgoliaClient from 'algoliasearch';
+import axios from 'axios';
+
 import './style/app.css';
 import searchIcon from './img/search-icon.svg';
 import movieIcon from './img/film.svg';
-import AlgoliaClient from 'algoliasearch';
+import deleteSpinner from './img/loading-red.svg';
 
 class App extends Component {
   APP_ID = 'BY41L4QN3A';
@@ -10,6 +13,7 @@ class App extends Component {
   INDEX_NAME = 'movies';
 
   state = {
+    query: '',
     results: { hits: [] },
   };
 
@@ -21,7 +25,6 @@ class App extends Component {
 
   updateSearchResults(searchQuery) {
     console.log(`Refreshing search results with query ${searchQuery}`);
-    console.log(this.moviesIndex);
     this.moviesIndex.search({ query: searchQuery })
         .then(results => {
             console.log(`Got ${results.length} results`);
@@ -33,11 +36,22 @@ class App extends Component {
         });
   }
 
+  onEntryDeleted(movieId) {
+    // Search seems to be eventually consistent so refreshing the search results won't remove the item
+    // Filter the results list manually to remove it immediately
+    let newHits = this.state.results.hits.filter(e => e.objectID !== movieId);
+    let newResults = Object.assign({}, this.state.results, {
+      hits: newHits, 
+      nbHits: this.state.results.nbHits - 1,
+    });
+    this.setState({ results: newResults });
+  }
+
   render() {
     return (
     <div className="container">
       <SearchBox onQueryChanged={this.updateSearchResults.bind(this)} placeholder="Start typing to discover movies..." />
-      <SearchResults results={this.state.results} query={this.state.query} />
+      <SearchResults results={this.state.results} query={this.state.query} onEntryDeleted={this.onEntryDeleted.bind(this)} />
     </div>
     );
   }
@@ -47,6 +61,7 @@ class SearchBox extends Component {
   INPUT_DELAY_MS = 300;
   state = {
     query: '',
+    focused: false,
   };
 
   constructor(props) {
@@ -66,11 +81,18 @@ class SearchBox extends Component {
     }.bind(this), this.INPUT_DELAY_MS);
   }
 
+  toggleFocus(val) {
+    this.setState({ focused: val });
+  }
+
   render() {
+    let boxClass = 'search-box';
+    if (this.state.focused) boxClass += ' focused';
+
     return (
-      <div className="search-box">
+      <div className={boxClass}>
         <img src={searchIcon} alt='Search for a movie!'/>
-        <input className="search-input" type="text" placeholder={this.props.placeholder} onChange={evt => this.onInputChange(evt)}/>
+        <input className="search-input" type="text" placeholder={this.props.placeholder} onChange={evt => this.onInputChange(evt)} onFocus={evt => this.toggleFocus(true)} onBlur={evt => this.toggleFocus(false)}/>
       </div>
     );
   }
@@ -103,7 +125,9 @@ class SearchResults extends Component {
     let results = [];
     if (this.hasQuery()) {
       this.props.results.hits.forEach((movie, index, arr) => {
-        results.push(<SearchEntry movieData={movie} idx={index} key={`${index}-entry`} />);
+        results.push(
+            <SearchEntry movieData={movie} idx={index} key={`${index}-entry`} onDeleted={this.props.onEntryDeleted} />
+        );
         if (index != (arr.length - 1)) {
           results.push(<SearchDivider key={`${index}-divider`} />);
         }
@@ -126,6 +150,20 @@ class SearchResults extends Component {
 }
 
 class SearchEntry extends Component {
+  state = {deleting: false};
+
+  deleteMovie(movieId) {
+    console.log(`Deleting movie ${movieId}`);
+    this.setState({deleting: true})
+
+    axios.delete(`/api/1/movies/${movieId}`)
+         .then(response => {
+             console.log(`Deleted: ${response.status}`)
+             this.setState({deleting: false});
+             this.props.onDeleted(movieId);
+         });
+  }
+
   render() {
     let genres = this.props.movieData._highlightResult.genre || [];
     let actors = this.props.movieData._highlightResult.actors || [];
@@ -140,15 +178,20 @@ class SearchEntry extends Component {
         actors = actors.join(', ');
     }
 
+    let deleteElem = this.state.deleting ? 
+        <img className="delete-spinner" src={deleteSpinner} /> :
+        <i className="delete-button fas fa-times-circle" onClick={evt => this.deleteMovie(this.props.movieData.objectID)} />;
+
     return (
       <div className="search-entry">
-        <span className="index">{this.props.idx + 1}</span>
+        <span className="index">{this.props.idx + 1}.</span>
         <img src={this.props.movieData.image} className="movie-image" />
         <span className="info" >
             <div className="title" dangerouslySetInnerHTML={{__html: this.props.movieData._highlightResult.title.value}} />
             <div className="secondary" dangerouslySetInnerHTML={{__html: secondary}}/>
             <div className="actors" dangerouslySetInnerHTML={{__html: actors}}/>
         </span>
+        { deleteElem }
       </div>
     );
   }

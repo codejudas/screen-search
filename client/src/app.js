@@ -127,11 +127,28 @@ class SearchResults extends Component {
 
 class SearchEntry extends Component {
   render() {
+    let genres = this.props.movieData._highlightResult.genre || [];
+    let actors = this.props.movieData._highlightResult.actors || [];
+
+    let secondary = this.props.movieData.year + ' | ' + genres.map((e) => e.value).join(', ');
+    actors = actors.map(e => e.value);
+    if (actors.length > 4) {
+        actors = actors.slice(0, 4).join(', ');
+        actors = actors + '...';
+    }
+    else {
+        actors = actors.join(', ');
+    }
+
     return (
       <div className="search-entry">
         <span className="index">{this.props.idx + 1}</span>
         <img src={this.props.movieData.image} className="movie-image" />
-        <span className="info" dangerouslySetInnerHTML={{__html: this.props.movieData._highlightResult.title.value}} />
+        <span className="info" >
+            <div className="title" dangerouslySetInnerHTML={{__html: this.props.movieData._highlightResult.title.value}} />
+            <div className="secondary" dangerouslySetInnerHTML={{__html: secondary}}/>
+            <div className="actors" dangerouslySetInnerHTML={{__html: actors}}/>
+        </span>
       </div>
     );
   }

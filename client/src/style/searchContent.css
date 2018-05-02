@@ -42,6 +42,10 @@
   transition: opacity 0.7s;
 }
 
+.search-header .return-button {
+  margin-left: 7px;
+}
+
 .search-header span {
   margin: 0px;
   font-weight: 200;

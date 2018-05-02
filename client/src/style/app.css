@@ -2,3 +2,11 @@
   margin: 0px 15%;
   height: 100%;
 }
+
+input {
+  outline: none;
+  background: transparent;
+  border: 0px;
+  font-weight: 200;
+  letter-spacing: 1px;
+}

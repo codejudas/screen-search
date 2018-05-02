@@ -58,13 +58,13 @@ class SearchEntry extends Component {
     }
 
     let deleteElem = this.state.deleting ? 
-        <img className="delete-spinner" src={deleteSpinner} /> :
+        <img className="delete-spinner" src={deleteSpinner} alt='Deleting movie'/> :
         <i className="delete-button fas fa-times-circle" onClick={evt => this.deleteMovie(this.props.movieData.objectID)} />;
 
     return (
       <div className="search-entry">
         <span className="index">{this.props.idx + 1}.</span>
-        <img src={this.props.movieData.image} className="movie-image" />
+        <img src={this.props.movieData.image} className="movie-image" alt='Movie poster' />
         <span className="info" >
           <div className="title" dangerouslySetInnerHTML={{ __html: this.props.movieData._highlightResult.title.value }} />
           <div className="secondary" dangerouslySetInnerHTML={{ __html: secondary }} />
@@ -89,16 +89,6 @@ class SearchMoreButton extends SearchEntry {
     return (
       <div className="search-entry search-more-button" onClick={this.props.onClick}>
         <i className="fas fa-chevron-circle-down" />
-      </div>
-    );
-  }
-}
-
-class SearchEntryPlaceholder extends SearchEntry {
-  render() {
-    return (
-      <div className="search-entry">
-        Nothing to show. Start typing to discover movies...
       </div>
     );
   }

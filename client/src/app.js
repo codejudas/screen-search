@@ -41,7 +41,7 @@ class App extends Component {
   onEntryDeleted(movieId) {
     // Search seems to be eventually consistent so refreshing the search results won't remove the item
     // Filter the results list manually to remove it immediately
-    let newHits = this.state.results.hits.filter(e => e.objectID !== movieId);
+    let newHits = this.state.hits.filter(e => e.objectID !== movieId);
     this.setState({ 
       hits: newHits,
       totalHits: this.state.totalHits - 1,

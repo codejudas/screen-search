@@ -12,7 +12,9 @@ class App extends Component {
 
   state = {
     query: '',
-    results: { hits: [] },
+    totalHits: 0,
+    hits: [],
+    results: null,
   };
 
   constructor(props) {
@@ -21,7 +23,7 @@ class App extends Component {
     this.moviesIndex = this.client.initIndex(this.INDEX_NAME);
   }
 
-  updateSearchResults(searchQuery) {
+  updateSearchResults(searchQuery, page) {
     console.log(`Refreshing search results with query ${searchQuery}`);
     this.moviesIndex.search({ query: searchQuery })
         .then(results => {
@@ -29,6 +31,8 @@ class App extends Component {
             console.log(results);
             this.setState({ 
               results: results,
+              hits: results.hits,
+              totalHits: results.nbHits,
               query: searchQuery,
             });
         });
@@ -38,18 +42,50 @@ class App extends Component {
     // Search seems to be eventually consistent so refreshing the search results won't remove the item
     // Filter the results list manually to remove it immediately
     let newHits = this.state.results.hits.filter(e => e.objectID !== movieId);
-    let newResults = Object.assign({}, this.state.results, {
-      hits: newHits, 
-      nbHits: this.state.results.nbHits - 1,
-    });
-    this.setState({ results: newResults });
+    this.setState({ 
+      hits: newHits,
+      totalHits: this.state.totalHits - 1,
+     });
+  }
+
+  hasMoreResults() {
+    return this.state.results.page < this.state.results.nbPages;
+  }
+
+  onLoadMoreResults() {
+    if (this.hasMoreResults()) {
+      let nextPage = this.state.results.page + 1;
+      console.log(`Loading page ${nextPage}..`);
+      this.moviesIndex
+          .search({ 
+            query: this.state.query, 
+            page: nextPage 
+          })
+          .then(results => {
+            console.log('Got more results');
+            console.log(results);
+            let newHits = this.state.hits.concat(results.hits);
+            this.setState({ 
+              results: results,
+              hits: newHits,
+              totalHits: results.nbHits,
+            });
+          });
+    } else {
+      console.log('No more results to get')
+    }
+
   }
 
   render() {
     return (
     <div className="container">
       <SearchBox onQueryChanged={this.updateSearchResults.bind(this)} placeholder="Start typing to discover movies..." />
-      <SearchResults results={this.state.results} query={this.state.query} onEntryDeleted={this.onEntryDeleted.bind(this)} />
+      <SearchResults hits={this.state.hits} 
+                     totalHits={this.state.totalHits}
+                     query={this.state.query} 
+                     onEntryDeleted={this.onEntryDeleted.bind(this)} 
+                     onLoadMoreResults={this.onLoadMoreResults.bind(this)} />
     </div>
     );
   }

@@ -147,3 +147,19 @@
     margin-right: 25px;
     width: 40px;
 }
+
+.search-entry.search-more-button {
+    justify-content: center;
+}
+
+.search-entry.search-more-button i {
+    font-size: 20px;
+    margin: 10px 0px;
+    opacity: 0.5;
+    transition: opacity 0.7s;
+}
+
+.search-entry.search-more-button:hover i {
+    opacity: 0.8;
+    transition: opacity 0.7s;
+}

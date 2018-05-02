@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import axios from 'axios';
 
 import '../style/searchResults.css';
-import movieIcon from '../img/film.svg';
 import deleteSpinner from '../img/loading-red.svg';
 
 class SearchResults extends Component {
@@ -18,7 +17,7 @@ class SearchResults extends Component {
     if (!this.hasQuery()) {
       return '';
     }
-    return `Found ${this.props.results.nbHits} matches`;
+    return `Found ${this.props.totalHits} matches`;
 
   }
 
@@ -31,12 +30,16 @@ class SearchResults extends Component {
     // let results = [<SearchEntryPlaceholder key='1' />];
     let results = [];
     if (this.hasQuery()) {
-      this.props.results.hits.forEach((movie, index, arr) => {
+      this.props.hits.forEach((movie, index, arr) => {
         results.push(
-            <SearchEntry movieData={movie} idx={index} key={`${index}-entry`} onDeleted={this.props.onEntryDeleted} />
+          <SearchEntry movieData={movie} idx={index} key={`${index}-entry`} onDeleted={this.props.onEntryDeleted} />
         );
-        if (index != (arr.length - 1)) {
-          results.push(<SearchDivider key={`${index}-divider`} />);
+        results.push(
+          <SearchDivider key={`${index}-divider`} />
+        );
+
+        if (index === (arr.length - 1) && this.props.hits.length < this.props.totalHits) {
+          results.push(<SearchMoreButton key={`${index}-load-more-button`} onClick={this.props.onLoadMoreResults}/>);
         }
         
       });
@@ -45,7 +48,6 @@ class SearchResults extends Component {
     return (
       <div className="search-content">
         <div className={headerClasses}>
-          {/* <i className="fas fa-film movie-icon"></i><span>Found some stuff</span> */}
           <i className="fas fa-video movie-icon"></i><span>{this.getSearchHeader()}</span>
         </div>
         <div className="search-results"> 
@@ -94,9 +96,9 @@ class SearchEntry extends Component {
         <span className="index">{this.props.idx + 1}.</span>
         <img src={this.props.movieData.image} className="movie-image" />
         <span className="info" >
-            <div className="title" dangerouslySetInnerHTML={{__html: this.props.movieData._highlightResult.title.value}} />
-            <div className="secondary" dangerouslySetInnerHTML={{__html: secondary}}/>
-            <div className="actors" dangerouslySetInnerHTML={{__html: actors}}/>
+          <div className="title" dangerouslySetInnerHTML={{ __html: this.props.movieData._highlightResult.title.value }} />
+          <div className="secondary" dangerouslySetInnerHTML={{ __html: secondary }} />
+          <div className="actors" dangerouslySetInnerHTML={{ __html: actors }} />
         </span>
         { deleteElem }
       </div>
@@ -108,6 +110,16 @@ class SearchDivider extends Component {
   render() {
     return (
       <div className="search-divider" />
+    );
+  }
+}
+
+class SearchMoreButton extends SearchEntry {
+  render() {
+    return (
+      <div className="search-entry search-more-button" onClick={this.props.onClick}>
+        <i className="fas fa-chevron-circle-down" />
+      </div>
     );
   }
 }

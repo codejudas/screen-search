@@ -9,49 +9,25 @@ class SearchResults extends Component {
     super(props);
   }
 
-  hasQuery() {
-    return this.props.query && this.props.query !== '';
-  }
-
-  getSearchHeader() {
-    if (!this.hasQuery()) {
-      return '';
-    }
-    return `Found ${this.props.totalHits} matches`;
-
-  }
-
   render() {
     let results = [];
-    if (this.hasQuery()) {
-      this.props.hits.forEach((movie, index, arr) => {
+    this.props.hits.forEach((movie, index, arr) => {
         results.push(
-          <SearchEntry movieData={movie} idx={index} key={`${index}-entry`} onDeleted={this.props.onEntryDeleted} />
+            <SearchEntry movieData={movie} idx={index} key={`${index}-entry`} onDeleted={this.props.onEntryDeleted} />
         );
         results.push(
-          <SearchDivider key={`${index}-divider`} />
+            <SearchDivider key={`${index}-divider`} />
         );
 
         if (index === (arr.length - 1) && this.props.hits.length < this.props.totalHits) {
-          results.push(<SearchMoreButton key={`${index}-load-more-button`} onClick={this.props.onLoadMoreResults}/>);
+            results.push(<SearchMoreButton key={`${index}-load-more-button`} onClick={this.props.onLoadMoreResults}/>);
         }
-        
-      });
-    }
+    });
 
     return (
-      <div className="search-content">
-        <div className={this.hasQuery() ? 'search-header' : 'search-header hidden'}>
-          <i className="fas fa-video movie-icon"></i><span className="total-results">{this.getSearchHeader()}</span>
-          <span className="new-movie-button" onClick={this.props.onAddMovie}>
-          Add movie <i className="fas fa-plus-circle"></i>
-          </span>
-        </div>
-
         <div className="search-results"> 
         {results}
         </div>
-      </div>
     );
   }
 }

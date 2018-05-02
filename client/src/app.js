@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import AlgoliaClient from 'algoliasearch';
 import SearchBox from './components/searchBox';
-import SearchResults from './components/searchResults';
+import SearchContent from './components/searchContents';
 
 import './style/app.css';
 
@@ -85,7 +85,7 @@ class App extends Component {
     return (
     <div className="container">
       <SearchBox onQueryChanged={this.updateSearchResults.bind(this)} placeholder="Start typing to discover movies..." />
-      <SearchResults hits={this.state.hits} 
+      <SearchContent hits={this.state.hits} 
                      totalHits={this.state.totalHits}
                      query={this.state.query} 
                      onEntryDeleted={this.onEntryDeleted.bind(this)} 

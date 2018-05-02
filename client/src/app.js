@@ -58,7 +58,7 @@ class App extends Component {
 }
 
 class SearchBox extends Component {
-  INPUT_DELAY_MS = 300;
+  INPUT_DELAY_MS = 150;
   state = {
     query: '',
     focused: false,

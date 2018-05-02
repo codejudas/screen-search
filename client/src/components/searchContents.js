@@ -22,6 +22,7 @@ class SearchContent extends Component {
         </div>
 
         <SearchResults hits={this.props.hits} 
+                       hidden={!this.hasQuery()}
                        totalHits={this.props.totalHits}
                        onEntryDeleted={this.props.onEntryDeleted} 
                        onLoadMoreResults={this.props.onLoadMoreResults} 

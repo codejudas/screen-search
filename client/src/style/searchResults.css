@@ -12,6 +12,10 @@
   background-color: white;
 }
 
+.search-results.hidden {
+  visibility: hidden;
+}
+
 .search-entry {
   display: inline-flex;
   padding: 10px 0px;

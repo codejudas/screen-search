@@ -5,10 +5,6 @@ import '../style/searchResults.css';
 import deleteSpinner from '../img/loading-red.svg';
 
 class SearchResults extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     let results = [];
     this.props.hits.forEach((movie, index, arr) => {
@@ -25,7 +21,7 @@ class SearchResults extends Component {
     });
 
     return (
-        <div className="search-results"> 
+        <div className={this.props.hidden ? "search-results hidden" : "search-results"}> 
         {results}
         </div>
     );

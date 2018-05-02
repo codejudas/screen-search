@@ -125,7 +125,10 @@ class AddMovie extends Component {
   }
 
   getProgressWidth() {
-    let prctComplete = ((this.state.index + 1) / (PAGE_ORDER.length)) * 100;
+    let prctComplete = (this.state.index / PAGE_ORDER.length) * 100;
+    if (this.state.done) {
+      prctComplete = 100;
+    }
     console.log(`Percent complete ${prctComplete}`);
     return `${prctComplete}%`;
   }
@@ -175,6 +178,13 @@ class AddMovie extends Component {
     return this.state.done? `${this.state.data.title} was successfully added` : PAGE_PLACEHOLDERS[this.getCurrentPage()];
   }
 
+  onKeyPress(e) {
+    if (e.key === 'Enter') {
+      console.log('Submitting via Enter');
+      this.nextPage();
+    }
+  }
+
   render() {
     let curPage = PAGE_ORDER[this.state.index];
     console.log(`Current page ${curPage}`);
@@ -188,6 +198,7 @@ class AddMovie extends Component {
                            placeholder={this.getPlaceholder()} 
                            onFocus={() => this.toggleFocus(true)}
                            onBlur={() => this.toggleFocus(false)} 
+                           onKeyPress={this.onKeyPress.bind(this)}
                            disabled={this.state.done}
                            />
                     {!this.isLastPage() ? (

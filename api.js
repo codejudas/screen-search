@@ -24,8 +24,22 @@ app.use(bodyParser.json({strict: true}));
  */
 app.post('/api/1/movies', (req, res) => {
   console.log(`Adding movie ${req.body.title}`);
-  // TODO: check for duplicates?
-  res.send({"Hello": "World"});
+  moviesIndex.addObjects([req.body], (err, content) => {
+    if (err) throw err;
+
+    let taskId = content.taskID;
+    let objId = content.objectIDs[0];
+    console.log(`Created with obj id: ${objId}`);
+    console.log(`Waiting for task ${taskId}`);
+    moviesIndex.waitTask(taskId, (err, content) => {
+      if (err) throw err;
+
+      console.log(content);
+      console.log(`Successfully added movie ${req.body.title}`);
+      let movieData = Object.assign({objectID: objId}, req.body);
+      res.status(201).send(req.body);
+    });
+  });
 });
 
 /*

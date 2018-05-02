@@ -3,6 +3,7 @@ import axios from 'axios';
 
 import '../style/searchResults.css';
 import deleteSpinner from '../img/loading-red.svg';
+import moviePlaceholder from '../img/movie-placeholder.png';
 
 class SearchResults extends Component {
   render() {
@@ -57,6 +58,8 @@ class SearchEntry extends Component {
         actors = actors.join(', ');
     }
 
+    let moviePoster = this.props.movieData.image || moviePlaceholder;
+
     let deleteElem = this.state.deleting ? 
         <img className="delete-spinner" src={deleteSpinner} alt='Deleting movie'/> :
         <i className="delete-button fas fa-times-circle" onClick={evt => this.deleteMovie(this.props.movieData.objectID)} />;
@@ -64,7 +67,7 @@ class SearchEntry extends Component {
     return (
       <div className="search-entry">
         <span className="index">{this.props.idx + 1}.</span>
-        <img src={this.props.movieData.image} className="movie-image" alt='Movie poster' />
+        <img src={moviePoster} className="movie-image" alt='Movie poster' />
         <span className="info" >
           <div className="title" dangerouslySetInnerHTML={{ __html: this.props.movieData._highlightResult.title.value }} />
           <div className="secondary" dangerouslySetInnerHTML={{ __html: secondary }} />

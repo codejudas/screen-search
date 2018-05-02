@@ -22,12 +22,6 @@ class SearchResults extends Component {
   }
 
   render() {
-    let headerClasses = 'search-header';
-    if (!this.hasQuery()) {
-      headerClasses += ' hidden';
-    }
-
-    // let results = [<SearchEntryPlaceholder key='1' />];
     let results = [];
     if (this.hasQuery()) {
       this.props.hits.forEach((movie, index, arr) => {
@@ -47,9 +41,13 @@ class SearchResults extends Component {
 
     return (
       <div className="search-content">
-        <div className={headerClasses}>
-          <i className="fas fa-video movie-icon"></i><span>{this.getSearchHeader()}</span>
+        <div className={this.hasQuery() ? 'search-header' : 'search-header hidden'}>
+          <i className="fas fa-video movie-icon"></i><span className="total-results">{this.getSearchHeader()}</span>
+          <span className="new-movie-button" onClick={this.props.onAddMovie}>
+          Add movie <i className="fas fa-plus-circle"></i>
+          </span>
         </div>
+
         <div className="search-results"> 
         {results}
         </div>

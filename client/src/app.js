@@ -72,10 +72,14 @@ class App extends Component {
             });
           });
     } else {
-      console.log('No more results to get')
+      console.log('No more results to get');
     }
-
   }
+
+  onAddMovie() {
+    console.log('Triggering add movie');
+  }
+
 
   render() {
     return (
@@ -85,7 +89,8 @@ class App extends Component {
                      totalHits={this.state.totalHits}
                      query={this.state.query} 
                      onEntryDeleted={this.onEntryDeleted.bind(this)} 
-                     onLoadMoreResults={this.onLoadMoreResults.bind(this)} />
+                     onLoadMoreResults={this.onLoadMoreResults.bind(this)} 
+                     onAddMovie={this.onAddMovie.bind(this)} />
     </div>
     );
   }

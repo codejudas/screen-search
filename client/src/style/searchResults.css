@@ -35,12 +35,29 @@
   margin-right: 15px;
   fill: white;
   font-size: 32px;
+  align-self: center;
+}
+
+.search-header .total-results {
+  align-self: center;
+}
+
+.search-header .new-movie-button {
+  margin-left: auto;
+  cursor: pointer;
+  opacity: 0.7;
+  font-size: 22px;
+  align-self: center;
+  transition: opacity 0.7s;
+}
+
+.search-header .new-movie-button:hover {
+  opacity: 1;
+  transition: opacity 0.7s;
 }
 
 .search-header span {
-  display: inline-block;
   margin: 0px;
-  vertical-align: top;
   font-weight: 200;
 }
 

@@ -1,0 +1,149 @@
+.search-content {
+  display: inline-flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  width: 80%;
+  margin: 0px 10%;
+}
+
+.search-results {
+  display: inline-flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 0px;
+  margin: 0px;
+  border-radius: 4px;
+  overflow: hidden;
+
+  color: black;
+  background-color: white;
+}
+
+.search-header {
+  display: inline-flex;
+  height: 50px;
+  font-size: 27px;
+  transition: opacity 0.5s;
+}
+
+.search-header.hidden {
+  opacity: 0;
+}
+
+.search-header .movie-icon {
+  margin-right: 15px;
+  fill: white;
+  font-size: 32px;
+}
+
+.search-header span {
+  display: inline-block;
+  margin: 0px;
+  vertical-align: top;
+  font-weight: 200;
+}
+
+.search-entry {
+  display: inline-flex;
+  padding: 10px 0px;
+  width: 100%;
+  box-sizing: border-box;
+  cursor: pointer;
+  transition: background-color 1s;
+}
+
+.search-entry:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+  transition: background-color 1s;
+}
+
+
+.search-entry span {
+  display: inline-block;
+  padding: 0px 10px;
+  height: 100%;
+}
+
+.search-divider {
+  display: inline-block;
+  width: 95%;
+  height: 2px;
+  opacity: 0.3;
+  background-color: black;
+  margin: 0px 2.5%;
+}
+
+.search-entry .movie-image {
+  display: inline-block;
+  vertical-align: middle;
+  width: 64px;
+  height: 64px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 1px gray solid;
+
+}
+
+.search-entry .index {
+  width: 20px;
+  text-align: center;
+  align-self: center;
+}
+
+.search-entry .info {
+  vertical-align: top;
+  font-size: 18px;
+  font-weight: 300;
+}
+
+.search-entry .info em {
+  color: #686de0;
+  font-style: normal;
+  font-weight: 400;
+}
+
+.search-entry .title {
+  font-weight: 400;
+  margin-bottom: 5px;
+}
+
+.search-entry .secondary {
+  font-size: 14px;
+  font-weight: 200;
+  opacity: 0.8;
+}
+
+.search-entry .actors {
+  font-size: 14px;
+  font-weight: 200;
+  opacity: 0.8;
+}
+
+.search-entry .delete-button {
+    margin: auto;
+    margin-right: 30px;
+    font-size: 25px;
+    color: #eb4d4b;
+    opacity: 0;
+    visibility: hidden;
+    transition: color 1s opacity 1s;
+}
+
+.search-entry:hover .delete-button {
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 1s;
+}
+
+.search-entry .delete-button:hover {
+    color: #ff7979;
+    transition: color 1s;
+}
+
+.search-entry .delete-spinner {
+    align-self: flex-end;
+    margin: auto;
+    margin-right: 25px;
+    width: 40px;
+}

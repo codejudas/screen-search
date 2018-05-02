@@ -8,16 +8,16 @@ class SearchResults extends Component {
   render() {
     let results = [];
     this.props.hits.forEach((movie, index, arr) => {
-        results.push(
-            <SearchEntry movieData={movie} idx={index} key={`${index}-entry`} onDeleted={this.props.onEntryDeleted} />
-        );
-        results.push(
-            <SearchDivider key={`${index}-divider`} />
-        );
+      results.push(
+        <SearchEntry movieData={movie} idx={index} key={`${index}-entry`} onDeleted={this.props.onEntryDeleted} />
+      );
+      results.push(
+        <SearchDivider key={`${index}-divider`} />
+      );
 
-        if (index === (arr.length - 1) && this.props.hits.length < this.props.totalHits) {
-            results.push(<SearchMoreButton key={`${index}-load-more-button`} onClick={this.props.onLoadMoreResults}/>);
-        }
+      if (index === (arr.length - 1) && this.props.hits.length < this.props.totalHits) {
+        results.push(<SearchMoreButton key={`${index}-load-more-button`} onClick={this.props.onLoadMoreResults}/>);
+      }
     });
 
     return (

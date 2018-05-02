@@ -5,9 +5,10 @@ const algolia = require('algoliasearch');
 
 const APP_ID = process.env.ALGOLIA_APP_ID;
 const API_KEY = process.env.ALGOLIA_API_KEY;
+const SEARCH_API_KEY = process.env.ALGOLIA_SEARCH_API_KEY;
 const INDEX_NAME = process.env.ALGOLIA_INDEX_NAME;
 
-if (!API_KEY || !API_KEY || !INDEX_NAME) { 
+if (!API_KEY || !API_KEY || !INDEX_NAME || !SEARCH_API_KEY) { 
   throw new Error("Environment variables missing, see README.md"); 
 }
 
@@ -18,6 +19,18 @@ const app = express();
 const port = process.env.PORT || 5000;
 
 app.use(bodyParser.json({strict: true}));
+
+/**
+ * Get algolia config for clients
+ */
+app.get('/api/1/credentials', (req, res) => {
+  console.log(`Getting credentials`);
+  res.status(200).send({
+    'app_id': APP_ID,
+    'search_api_key': SEARCH_API_KEY,
+    'index_name': INDEX_NAME,
+  });
+});
 
 /*
  * Add a new movie to the index
@@ -59,7 +72,6 @@ app.delete('/api/1/movies/:id', (req, res) => {
       res.status(204).send();
     });
   });
- //res.status(204).send();
 });
 
 app.listen(port, () => {

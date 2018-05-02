@@ -1,15 +1,12 @@
 import React, { Component } from 'react';
 import AlgoliaClient from 'algoliasearch';
+import axios from 'axios';
 import SearchBox from './components/searchBox';
 import SearchContent from './components/searchContents';
 
 import './style/app.css';
 
 class App extends Component {
-  APP_ID = 'BY41L4QN3A';
-  SEARCH_ONLY_API_KEY = 'e63bfd56ed5ae8facc75497aa9928062';
-  INDEX_NAME = 'movies';
-
   state = {
     query: '',
     totalHits: 0,
@@ -19,11 +16,21 @@ class App extends Component {
 
   constructor(props) {
     super(props);
-    this.client = AlgoliaClient(this.APP_ID, this.SEARCH_ONLY_API_KEY);
-    this.moviesIndex = this.client.initIndex(this.INDEX_NAME);
+  }
+
+  componentDidMount() {
+    console.log('Connecting to backend...');
+    axios.get('/api/1/credentials')
+         .then(resp => {
+            this.client = AlgoliaClient(resp.data.app_id, resp.data.search_api_key);
+            this.moviesIndex = this.client.initIndex(resp.data.index_name);
+            console.log('Connected');
+         });
   }
 
   updateSearchResults(searchQuery, page) {
+    if (!this.moviesIndex) return;
+
     console.log(`Refreshing search results with query ${searchQuery}`);
     this.moviesIndex.search({ query: searchQuery })
         .then(results => {

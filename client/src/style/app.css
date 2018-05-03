@@ -10,3 +10,11 @@ input {
   font-weight: 200;
   letter-spacing: 1px;
 }
+
+#algolia-logo {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  width: 150px;
+  opacity: 0.7;
+}

@@ -5,6 +5,7 @@ import SearchBox from './components/searchBox';
 import SearchContent from './components/searchContents';
 
 import './style/app.css';
+import algoliaLogo from './img/algolia-logo-dark.png';
 
 class App extends Component {
   state = {
@@ -98,6 +99,7 @@ class App extends Component {
                      onEntryDeleted={this.onEntryDeleted.bind(this)} 
                      onLoadMoreResults={this.onLoadMoreResults.bind(this)} 
                      onAddMovie={this.onAddMovie.bind(this)} />
+      <img id='algolia-logo' src={algoliaLogo} alt='Powered by Algolia' />
     </div>
     );
   }

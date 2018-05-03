@@ -9,7 +9,7 @@
   overflow: hidden;
 
   color: black;
-  background-color: white;
+  background-color: rgba(255, 255, 255, 0.8);
 }
 
 .search-results.hidden {
@@ -26,7 +26,7 @@
 }
 
 .search-entry:hover {
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: #dee0f7;
   transition: background-color 1s;
 }
 
@@ -58,25 +58,26 @@
 
 .search-entry .index {
   width: 20px;
+  opacity: 0.6;
   text-align: center;
   align-self: center;
 }
 
 .search-entry .info {
-  vertical-align: top;
+  align-self: center;
   font-size: 18px;
   font-weight: 300;
 }
 
 .search-entry .info em {
-  color: #686de0;
+  color: #4834d4;
   font-style: normal;
   font-weight: 400;
 }
 
 .search-entry .title {
+  opacity: 0.8;
   font-weight: 400;
-  margin-bottom: 5px;
 }
 
 .search-entry .secondary {
@@ -112,7 +113,7 @@
     margin: auto;
     margin-right: 30px;
     font-size: 25px;
-    color: #eb4d4b;
+    color: #686de0;
     opacity: 0;
     visibility: hidden;
     transition: color 1s opacity 1s;
@@ -125,7 +126,7 @@
 }
 
 .search-entry .delete-button:hover {
-    color: #ff7979;
+    color: #4834d4;
     transition: color 1s;
 }
 

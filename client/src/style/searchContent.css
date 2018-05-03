@@ -22,6 +22,7 @@
   fill: white;
   font-size: 32px;
   align-self: center;
+  opacity: 0.9;
 }
 
 .search-header .total-results {

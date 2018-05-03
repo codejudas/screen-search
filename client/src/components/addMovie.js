@@ -67,7 +67,7 @@ class Parsers {
     static rating(input) {
         try {
             let rat = parseInt(input, 10);
-            if (rat < 0 || rat > 5) throw new Error('Invalid Rating');
+            if (rat < -1 || rat > 5) throw new Error('Invalid Rating');
             return rat;
         } catch(err) { return null; }
     }

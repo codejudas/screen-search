@@ -47,7 +47,7 @@
 
 .search-entry .movie-image {
   display: inline-block;
-  vertical-align: middle;
+  align-self: center;
   width: 64px;
   height: 64px;
   object-fit: cover;
@@ -80,9 +80,26 @@
 }
 
 .search-entry .secondary {
+  display: inline-block;
   font-size: 14px;
   font-weight: 200;
   opacity: 0.8;
+}
+
+.search-entry .rating {
+  display: inline-block;
+  margin-left: 4px;
+}
+
+.search-entry .rating-star {
+  font-size: 12px;
+  opacity: 0.6;
+  color: #4834d4;
+}
+
+.search-entry .rating-star.inactive {
+  opacity: 0.2;
+  color: black;
 }
 
 .search-entry .actors {

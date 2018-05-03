@@ -3,10 +3,9 @@
   margin: 60px 20%;
   width: 60%;
   height: 60px;
-  background-color: white;
+  background-color: #d5d6f6;
   box-sizing: border-box;
   border-radius: 4px;
-  box-shadow: inset 0 0 0 #4834d4;
   transition: box-shadow 1s;
 }
 
@@ -15,12 +14,18 @@
   transition: box-shadow 1s;
 }
 
+.search-box.focused > img {
+  opacity: 0.7;
+  transition: opacity 0.7s;
+}
+
 .search-box > img {
   display: inline;
   height: 35px;
   margin: auto 0px;
   padding: 0px 15px;
-  opacity: 0.7;
+  opacity: 0.5;
+  transition: opacity 0.7s;
 }
 
 .search-box > input {

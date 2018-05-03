@@ -48,10 +48,11 @@ class SearchEntry extends Component {
     let genres = this.props.movieData._highlightResult.genre || [];
     let actors = this.props.movieData._highlightResult.actors || [];
 
-    let secondary = this.props.movieData.year + ' | ' + genres.map((e) => e.value).join(', ');
+    let secondary = this.props.movieData.year + ' | ' + genres.map((e) => e.value).join(', ') + ' | ';
+
     actors = actors.map(e => e.value);
     if (actors.length > 4) {
-        actors = actors.slice(0, 4).join(', ');
+        actors = actors.slice(0, 5).join(', ');
         actors = actors + '...';
     }
     else {
@@ -64,6 +65,15 @@ class SearchEntry extends Component {
         <img className="delete-spinner" src={deleteSpinner} alt='Deleting movie'/> :
         <i className="delete-button fas fa-times-circle" onClick={evt => this.deleteMovie(this.props.movieData.objectID)} />;
 
+    let stars = [];
+    for (let i=0; i<5; i++) {
+      if ((i + 1) < this.props.movieData.rating) {
+        stars.push(<i key={i} className="rating-star fas fa-star"></i>);
+      } else {
+        stars.push(<i key={i} className="rating-star inactive fas fa-star"></i>);
+      }
+    }
+
     return (
       <div className="search-entry">
         <span className="index">{this.props.idx + 1}.</span>
@@ -71,6 +81,7 @@ class SearchEntry extends Component {
         <span className="info" >
           <div className="title" dangerouslySetInnerHTML={{ __html: this.props.movieData._highlightResult.title.value }} />
           <div className="secondary" dangerouslySetInnerHTML={{ __html: secondary }} />
+          <div className="rating">{stars}</div>
           <div className="actors" dangerouslySetInnerHTML={{ __html: actors }} />
         </span>
         { deleteElem }

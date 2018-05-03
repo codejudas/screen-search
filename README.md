@@ -19,9 +19,9 @@ $ echo "ALGOLIA_INDEX_NAME=movies" >> .env
 
 ## Running
 
-Run both client and server:
+Run the server:
 ```bash
 $ npm start
 ```
 
-This starts the react server on port 3000 and the api server on port 5000
+This starts the express server on port 5000.

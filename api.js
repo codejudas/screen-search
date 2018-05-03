@@ -21,6 +21,11 @@ const port = process.env.PORT || 5000;
 app.use(bodyParser.json({strict: true}));
 
 /**
+ * Get react webapp
+ */
+app.use('/', express.static('./client/build'));
+
+/**
  * Get algolia config for clients
  */
 app.get('/api/1/credentials', (req, res) => {

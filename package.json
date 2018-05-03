@@ -5,9 +5,8 @@
   "main": "api.js",
   "scripts": {
     "postinstall": "cd client && npm install",
-    "client": "cd client && yarn start",
-    "server": "nodemon api.js",
-    "start": "concurrently --kill-others-on-fail 'yarn server' 'yarn client'",
+    "build": "cd client && npm run build",
+    "start": "npm run build && nodemon api.js",
     "clean": "rm -rf node_modules && rm -rf client/node_modules"
   },
   "repository": {

@@ -5,6 +5,7 @@
   "main": "api.js",
   "scripts": {
     "postinstall": "cd client && npm install",
+    "heroku-postbuild": "npm run build",
     "build": "cd client && npm run build",
     "start": "npm run build && nodemon api.js",
     "production": "node api.js",

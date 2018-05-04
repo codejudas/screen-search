@@ -7,6 +7,7 @@
     "postinstall": "cd client && npm install",
     "build": "cd client && npm run build",
     "start": "npm run build && nodemon api.js",
+    "production": "node api.js",
     "clean": "rm -rf node_modules && rm -rf client/node_modules"
   },
   "repository": {

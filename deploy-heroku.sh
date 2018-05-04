@@ -1,3 +1,8 @@
+#!/bin/bash
+
+# Exit on any failure
+set -e
+
 set +x
 
 git checkout build

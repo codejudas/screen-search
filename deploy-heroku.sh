@@ -3,7 +3,8 @@
 # Exit on any failure
 set -e
 
-set +x
+# Echo commands
+set -x
 
 git checkout build
 git reset --hard master
@@ -15,4 +16,4 @@ echo "================"
 echo "====DEPLOYED===="
 echo "================"
 sleep 1
-heroku logs
+heroku logs --tail

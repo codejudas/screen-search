@@ -1,5 +1,7 @@
 # Screen Search
-Small movie searching webapp using algolia
+Small live-updating movie searching webapp using Algolia, React, and Nodejs.
+
+![live](http://g.recordit.co/NKFG3BVcHp.gif)
 
 ## Installation
 
